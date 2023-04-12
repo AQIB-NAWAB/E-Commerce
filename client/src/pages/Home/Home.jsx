@@ -32,7 +32,7 @@ const Home = () => {
         <div className="products">
           {loading ? <Loading/> :(
             products && products.products && products.products.map((single_product) =>
-            <ProductCard key={single_product.id} product={single_product}/>
+            <ProductCard key={single_product._id} product={single_product}/>
           )
           )}
         </div>
