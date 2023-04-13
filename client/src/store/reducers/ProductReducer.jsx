@@ -3,7 +3,7 @@ import axios from "axios"
 const initialState={
     loading:false,
     products:[],
-    product:{},
+    single_product_details:{},
     error:"",
 }
 
@@ -47,19 +47,19 @@ const productSlice=createSlice({
 
 
         //  fetch details
-        builder.addCase(fetchProductDetails.pending,(state,acion)=>{
-            state.loading=true 
-            state.product=[]         
-        })
-        builder.addCase(fetchProductDetails.fulfilled,(state,action)=>{
-            state.loading=false,
-            state.product=action.payload
-        })
-        builder.addCase(fetchProductDetails.rejected,(state,action)=>{
-            state.error=action.error.message
-            state.loading=false
-            state.product=[]         
-        })
+        builder.addCase(fetchProductDetails.pending, (state, action) => {
+            state.loading = true;
+            state.single_product_details = {};
+          });
+          builder.addCase(fetchProductDetails.fulfilled, (state, action) => {
+            state.loading = false;
+            state.single_product_details = action.payload;
+          });
+          builder.addCase(fetchProductDetails.rejected, (state, action) => {
+            state.error = action.error.message;
+            state.loading = false;
+            state.single_product_details = {};
+          });
 
 
 
