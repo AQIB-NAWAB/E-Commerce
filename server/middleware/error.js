@@ -16,17 +16,18 @@ const errorHandler = (err, req, res, next) => {
   //wrong jsonwebToken Error
   if(err.name==="JsonWebTokenError"){
     const message=`Json Web Token is invalid try again`
-    err=new CustomError(message,400)
+    err=new CustomError(message,401)
   }
   // JWT EXPIRE ERROR
   if(err.name==="TokenExpiredError"){
     const message=`Json Web Token is EXPIRED try again`
-    err=new CustomError(message,400)
+    err=new CustomError(message,401)
   }
-  return next( res.status(err.statusCode || 500).json({
+  
+  res.status(err.statusCode || 500).json({
     status: false,
     message: err.message || "Internal Server Error",
-  }));
+  });
 };
 
 module.exports = errorHandler;

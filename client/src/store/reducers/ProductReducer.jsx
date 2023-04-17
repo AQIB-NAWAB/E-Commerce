@@ -10,14 +10,24 @@ const initialState={
 
 
 
-export  const fetchProducts=createAsyncThunk("fetch/Products",async()=>{
-    const response = await axios.get('http://localhost:3000/api/v1/products');
+export const fetchProducts = createAsyncThunk("fetch/Products", async({keyword="",price=[0,25000],page=1,isCategory}) => {
+    try {
+        
+        let link = `http://localhost:3000/api/v1/products?price[gte]=${price[0]}&keyword=${keyword}&price[lte]=${price[1]}&page=${page}`;
 
-   
-    return response.data;
-})
+  
 
-// get the Product Details 
+if(isCategory){
+  link = `http://localhost:3000/api/v1/products?price[gte]=${price[0]}&keyword=${keyword}&price[lte]=${price[1]}&page=${page}&category=${isCategory}`;
+}
+      const response = await axios.get(link);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+
 export  const fetchProductDetails=createAsyncThunk("fetch/Product/details",async(id)=>{
     const response = await axios.get(`http://localhost:3000/api/v1/product/${id}`);
 
@@ -34,10 +44,10 @@ const productSlice=createSlice({
             state.loading=true 
             state.products=[]         
         })
-        builder.addCase(fetchProducts.fulfilled,(state,action)=>{
-            state.loading=false,
-            state.products=action.payload
-        })
+        builder.addCase(fetchProducts.fulfilled, (state, action) => {
+            state.loading = false;
+            state.products = action.payload; // Accessing the products array from response payload
+        });
         builder.addCase(fetchProducts.rejected,(state,action)=>{
             state.error=action.error.message
             state.loading=false

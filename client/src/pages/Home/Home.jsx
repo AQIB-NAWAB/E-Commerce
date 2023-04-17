@@ -7,13 +7,14 @@ import Loading from "../../components/Loading/Loading"
 
 import { useDispatch } from 'react-redux';
 import { fetchProducts } from '../../store/reducers/ProductReducer';
+import Banner from '../../components/Banner/Banner';
 const Home = () => {
   const { loading, products } = useSelector(state => state.Products);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(""));
   }, [dispatch]);
 if(loading){
   return <Loading/>
@@ -34,12 +35,13 @@ if(loading){
 
         <div className="products">
           {
-            products && products.products && products.products.map((single_product) =>
+            products?.products?.map((single_product) =>
             <ProductCard key={single_product._id} product={single_product}/>
  
           )}
         </div>
       </div>
+      <Banner/>
     </div>
   );
 };

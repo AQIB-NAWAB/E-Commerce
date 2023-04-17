@@ -12,27 +12,30 @@ const Navbar = () => {
   const changeNavbar=()=>{
     setIsOpen(!isOpen)
   }
+  const close_navbar=()=>{
+    setIsOpen(false)
+  }
   return (
     <div className={`navbar  ${isOpen? "show_navbar" : "close_navbar" }  `} >
 <span className='navbar_brand'>
 
-<Link to="/">E-Commerce</Link>
+<Link onClick={()=>close_navbar()} to="/">E-Commerce</Link>
 </span>
 <div className="middle_nav">
   <span>
-<Link>Home</Link>
-<Link>Product</Link>
+<Link onClick={()=>close_navbar()} to="/">Home</Link>
+<Link onClick={()=>close_navbar()} to="/products">Products</Link>
   </span>
   <span>
-<Link>Contact</Link>
-<Link>About</Link>
+<Link onClick={()=>close_navbar()}>Contact</Link>
+<Link onClick={()=>close_navbar()}>About</Link>
   </span>
 </div>
 
 <div className="right_navbar">
-<Link><BsSearch size={20}/></Link>
-<Link><BsCart4 size={20}/></Link>
-<Link><CgProfile size={20}/></Link>
+<Link onClick={()=>close_navbar()} to="/search"><BsSearch size={20}/></Link>
+<Link onClick={()=>close_navbar()}><BsCart4 size={20}/></Link>
+<Link onClick={()=>close_navbar()} to="/login"><CgProfile size={20}/></Link>
 </div>
 
 <span className='close_icon' onClick={()=>changeNavbar()}>

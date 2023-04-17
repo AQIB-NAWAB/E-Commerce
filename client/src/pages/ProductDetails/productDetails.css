@@ -10,7 +10,16 @@
   justify-content: space-evenly;
   width: 90%;
   margin: 100px auto;
+  
+}
 
+@media (max-width:780px) {
+  .product_details{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+  } 
 }
 
 .product_info{
@@ -33,6 +42,7 @@
   font-size: 18px;
   border-left:0px ;
   border-right:0px ;
+  border: 0.5px solid rgba(0, 0, 0, 0.455);
 
 }
 .number_of_products
@@ -49,7 +59,7 @@
 
 }
 .number_of_products span button {
-  background-color:blue;
+  background-color: #0672f6;
   color:white;
 
 }
@@ -80,7 +90,7 @@
   font-weight: 500;
   cursor: pointer;
   letter-spacing: 1px;
-  width: 24%;
+  width: 30%;
   text-align: center;
 }
 
@@ -91,4 +101,39 @@
 .inStock{
   color: green;
   font-size: 15px;
+}
+
+.reviews{
+
+  display: flex;
+  width: 100%;
+  margin: 70px auto;
+  height: 200px;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+.reviews button{
+  width: 60px;
+  height: 60px;
+  font-size: 40px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-radius:50% ;
+  align-self: center
+  ;
+}
+.reviews button:hover{
+background-color: rgba(10, 10, 10, 0.331);
+transition: 0.8s;
+}
+.reviews button svg{
+  color: white;
+}
+ .main_heading{
+  text-align: center;
 }
