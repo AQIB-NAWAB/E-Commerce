@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../../components/Loading/Loading";
 import "./LoginSign.css";
-import { BiUserCircle } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
 import { GoEyeClosed } from "react-icons/go";
 import { AiFillEye } from "react-icons/ai";
@@ -9,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/reducers/UserReducer";
-
+import {Link} from "react-router-dom" 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -37,8 +36,12 @@ const Login = () => {
       toast.error("Email and password are required.");
       return;
     }
-    const { email, password } = loginData;
-    dispatch(loginUser(email, password));
+   
+    dispatch(loginUser(loginData));
+    setLoginData({
+      email:"",
+      password:""
+    })
   };
 
   if (loading) {
@@ -89,8 +92,8 @@ const Login = () => {
             <br />
           </form>
           <p className="message">
-            Dont Have Account{" "}
-            <span onClick={() => setIsLogin(!isLogin)}>Create Account</span>{" "}
+            Dont Have Account
+            <Link  to="/signup"> <span>Create Account</span></Link>
           </p>
         </div>
       </div>

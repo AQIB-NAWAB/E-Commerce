@@ -13,7 +13,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => { 
     dispatch(fetchProducts(""));
   }, [dispatch]);
 if(loading){

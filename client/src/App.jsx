@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/Header/Navbar'
 import {Routes,Route} from "react-router-dom"
@@ -6,13 +6,27 @@ import Home from './pages/Home/Home'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Search from './pages/Search/Search'
 import Products from './pages/Products/Products'
-import LoginSign from './pages/User/LoginSign'
+import { useSelector,useDispatch } from 'react-redux'
+import UserOption from "./components/UserOptions/UserOption.jsx"
+import { loadUser,clearErrors } from './store/reducers/UserReducer'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Login from './pages/User/LogIn'
+import SignUp from './pages/User/Signup'
 function App() {
- 
-
+ const {isAuthenticated,user,error}=useSelector(state=>state.User)
+ const dispatch=useDispatch()
+ if(error){
+  toast.error(error)
+  dispatch(clearErrors())
+ }
+useEffect(()=>{
+  dispatch(loadUser())
+},[dispatch])
   return (
    <div className='App'>
 <Navbar />
+{isAuthenticated && <UserOption user={user}/>}
 <Routes>
   <Route path='/' exact element={<Home/>}/>
   <Route path='/product/:id' element={<ProductDetails/>} 
@@ -23,7 +37,9 @@ function App() {
   /> 
   <Route  path='/search' element={<Search/>} 
   /> 
-  <Route path="/login" element={<LoginSign/>} />
+  <Route path="/login" element={<Login/>} />
+  <Route path="/signup" element={<SignUp/>} />
+  
 </Routes>
 
    </div>
