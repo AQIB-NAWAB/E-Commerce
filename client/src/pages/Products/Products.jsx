@@ -31,11 +31,12 @@ const [page, setPage] = useState(1);
     return `${value} `;
   }
   const navigate = useNavigate();
+  const { keyword } = useParams();
 
   const minDistance = 10;
   const dispatch = useDispatch();
-  const { loading, products } = useSelector((state) => state.Products);
-
+  const { loading } = useSelector((state) => state.Products);
+const products=useSelector(state=>state.Products.products)
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
       return;
@@ -47,12 +48,14 @@ const [page, setPage] = useState(1);
       setprice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
     }
   };
-  const pageWantShow = Math.ceil(products.productCount / 8);
-
+  let pageWantShow = Math.ceil(products.productCount / 8);
+if(keyword){
+  pageWantShow=Math.ceil(products.length/8)
+}
   const handelPagination = () => {
     setPage(pageWantShow == page ? 1 : page + 1);
   };
-  const { keyword } = useParams();
+
 
   useEffect(() => {
     const data = { keyword: keyword || "", price, page,isCategory};

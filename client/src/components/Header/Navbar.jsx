@@ -34,7 +34,7 @@ const Navbar = () => {
 
 <div className="right_navbar">
 <Link onClick={()=>close_navbar()} to="/search"><BsSearch size={20}/></Link>
-<Link onClick={()=>close_navbar()}><BsCart4 size={20}/></Link>
+<Link onClick={()=>close_navbar()} to="/cart"><BsCart4 size={20}/></Link>
 <Link onClick={()=>close_navbar()} to="/login"><CgProfile size={20}/></Link>
 </div>
 

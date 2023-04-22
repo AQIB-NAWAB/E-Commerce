@@ -10,16 +10,19 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {logoutUser} from "../../store/reducers/UserReducer"
+import {useNavigate} from "react-router-dom"
 export default function UserOption({ user }) {
   const [open,setOpen]=useState(false)
   const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const items=useSelector(state=>state.Cart.items)
+
   const actions = [
-    
-    { icon: <ViewListIcon />, name: 'Orders' },
-    { icon: <PersonIcon />, name: 'Profile' },  
-    {icon:<ShoppingCartIcon/>,name:"Cart"},
+    { icon: <ViewListIcon />, name: 'Orders',onClick: () => navigate("/orders")},
+    { icon: <PersonIcon />, name: 'Profile',onClick: () => navigate("/account") },  
+    {icon:<ShoppingCartIcon style={{color:items.length>0?"tomato":"unset"}}/>,name:`(${items.length}) Cart`,onClick: () => navigate("/cart")},
     {icon:<LogoutIcon/>,name:"Logout", onClick: () => dispatch(logoutUser())},
   ];
 
@@ -33,7 +36,7 @@ export default function UserOption({ user }) {
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<Avatar alt={user.user.email} src={user.user.avatar.url} />}
+        icon={<Avatar alt={user.user.name|| user.user.email} src={user.user.avatar.url} />}
         onOpen={()=>setOpen(true)}
         onClose={()=>setOpen(false)}
         open={open}
@@ -44,6 +47,8 @@ export default function UserOption({ user }) {
             icon={action.icon}
             tooltipTitle={action.name}
             onClick={action.onClick}
+
+            tooltipOpen={window.innerWidth<786?true:false}
           />
         ))}
       </SpeedDial>

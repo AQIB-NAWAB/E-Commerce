@@ -8,8 +8,12 @@ import "./productDetails.css";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import {FcNext} from "react-icons/fc"
 import {FcPrevious} from "react-icons/fc" 
+import {addToCart} from "../../store/reducers/CartReducer"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ProductDetails = () => {
   const [selected,setSelected]=useState(0)
+const [quantity,setQuantity]=useState(0)
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -18,16 +22,43 @@ const ProductDetails = () => {
   }, [id, dispatch]);
 
   const state = useSelector((state) => state.Products);
-
+let productId;
   const product = state.single_product_details.product;
-
+  if (product && product._id) {
+    productId=product._id
+  }
   if (state.loading) {
     return <Loading />;
   }
+ const increaseQnty=()=>{
+  if(product.stock<=quantity)return
+  const qunty=quantity+1
+  setQuantity(qunty)
+ }
 
+ const decreaseQnty=()=>{
+  if(1>=quantity)return
+  const qunty=quantity-1
+  setQuantity(qunty)
+ }
+ const addCart=()=>{
+  if(quantity==0){
+    return toast.error("You have to atleast set 1 quantity  ")
+  }else{
+
+    const data={
+      productId,
+      quantity,
+    }
+    dispatch(addToCart(data))
+    toast.success("Item add to Cart Successfuly ")
+  }
+    
+ }
   if (product) {
     return (
       <div>
+        <ToastContainer/>
         <h2 className="main_heading">Products Details</h2>
         <div className="product_details">
           <div className="product_image">
@@ -40,11 +71,11 @@ const ProductDetails = () => {
             <h2>${product.price}</h2>
             <div className="number_of_products">
               <span>
-                <button>-</button>
-                <input type="number" value={1} />
-                <button>+</button>
+                <button onClick={()=>decreaseQnty()}>-</button>
+                <input readOnly type="number" value={quantity} />
+                <button onClick={()=>increaseQnty()}>+</button>
               </span>
-              <span className="cart">Add To Cart</span>
+              <span className="cart_add" onClick={()=>addCart()}>Add To Cart</span>
             </div>
             <hr />
             <h3>

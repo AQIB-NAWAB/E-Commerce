@@ -7,8 +7,9 @@ import { AiFillEye } from "react-icons/ai";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../store/reducers/UserReducer";
-import {Link} from "react-router-dom" 
+import { clearErrors, loginUser } from "../../store/reducers/UserReducer";
+import { useNavigate,Link } from "react-router-dom";
+
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -16,15 +17,24 @@ const Login = () => {
     email: "",
     password: "",
   });
-
-  const { loading, error } = useSelector((state) => state.User);
+  const { loading, error, isAuthenticated } = useSelector((state) => state.User);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+    useEffect(() => {
+      if (isAuthenticated) {
+        navigate("/account");
+      }
+    }, [isAuthenticated, navigate]);
+
+
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
-  }, [error, dispatch]);
+    dispatch(clearErrors())
+  }, [error]);
 
   const handelLoginData = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -32,12 +42,9 @@ const Login = () => {
 
   const handelLoginUser = (e) => {
     e.preventDefault();
-    if (!loginData.email || !loginData.password) {
-      toast.error("Email and password are required.");
-      return;
-    }
-   
-    dispatch(loginUser(loginData));
+
+    dispatch(loginUser(loginData))
+
     setLoginData({
       email:"",
       password:""
@@ -93,7 +100,9 @@ const Login = () => {
           </form>
           <p className="message">
             Dont Have Account
-            <Link  to="/signup"> <span>Create Account</span></Link>
+            <Link to="/signup">
+              <span>Create Account</span>
+            </Link>
           </p>
         </div>
       </div>

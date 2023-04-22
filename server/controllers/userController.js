@@ -5,19 +5,36 @@ const Product=require("../models/productModel")
 const sendToken=require("../utils/jwtToken")
 const sendEmail=require("../utils/sendEmail.js")
 const crypto=require("crypto")
+const cloudinary=require("cloudinary")
+const fs = require('fs');
 
-exports.registerUser=catchAsyncError(async(req,res,next)=>{
-    const {name,email,password}=req.body
-    const user=await User.create({
-        name,email,password,
-        avatar:{
-            public_id:"this is sample id",
-            url:"proflie url"
-        }
-    })
-    sendToken( user,201,res)
-})
 
+exports.registerUser = catchAsyncError(async (req, res, next) => {
+    let myCloud;
+    if (req.body.avatar) {
+        const buffer = Buffer.from(req.body.avatar.split(',')[1], 'base64'); // convert base64 image to buffer
+        myCloud = await cloudinary.uploader.upload(buffer, { // pass the buffer to cloudinary
+          folder: "avatars",
+          width: 300,
+          crop: "scale",
+        });
+      }
+if(!myCloud){
+    return next(new CustomError("Getting error from Registration"),400)
+}
+    const { name, email, password } = req.body;
+    const user = await User.create({
+      name,
+      email,
+      password,
+      avatar:{
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
+          }
+    });
+    sendToken(user, 201, res);
+  });
+  
 
 // Login User
 
@@ -45,9 +62,9 @@ exports.loginUser=catchAsyncError(async(req,res,next)=>{
 //logout 
 exports.logout=catchAsyncError(async(req,res,next)=>{
     res.cookie("token",null,{
-        expires:new Date(Date.now()),
+        expires:new Date(0),
         httpOnly:true
-    })
+    })  
     res.status(200).json({
         success:true,
         message:"Logout"

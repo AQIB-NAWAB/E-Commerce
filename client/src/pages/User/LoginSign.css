@@ -163,6 +163,11 @@ form button {
 .animate{
   animation: load 1s    forwards ;
 }
+.avatar img{
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+}
 
 @keyframes load {
   from {
