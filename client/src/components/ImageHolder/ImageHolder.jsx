@@ -12,7 +12,7 @@ const ImageHolder = ({ imageUrl }) => {
   return (
     <div className="image_holder">
 
-      <img src={imageUrl} onClick={handleImageClick}  alt="Product" className="img_product"/>
+      <img src={imageUrl} onClick={handleImageClick}    alt="Product" className="img_product"/>
 
 
 <div 

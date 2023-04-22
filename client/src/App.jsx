@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from './pages/User/LogIn'
 import SignUp from './pages/User/Signup'
 import Cart from './pages/Cart/Cart'
+import Account from './pages/Account/Account'
 function App() {
  const {isAuthenticated,user,error}=useSelector(state=>state.User)
  const dispatch=useDispatch()
@@ -29,6 +30,7 @@ useEffect(()=>{
 <Navbar />
 {isAuthenticated && <UserOption user={user}/>}
 
+
 <Routes>
   <Route path='/' exact element={<Home/>}/>
   <Route path='/product/:id' element={<ProductDetails/>} 
@@ -42,7 +44,7 @@ useEffect(()=>{
   <Route path="/login" element={<Login/>} />
   <Route path="/signup" element={<SignUp/>} />
   <Route path="/cart" element={<Cart/>}/>
-  
+{isAuthenticated && <Route path='/account' element={<Account/>}/>}  
 </Routes>
 
    </div>

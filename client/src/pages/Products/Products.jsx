@@ -49,8 +49,9 @@ const products=useSelector(state=>state.Products.products)
     }
   };
   let pageWantShow = Math.ceil(products.productCount / 8);
+
 if(keyword){
-  pageWantShow=Math.ceil(products.length/8)
+  pageWantShow=Math.ceil((products.length)/8)
 }
   const handelPagination = () => {
     setPage(pageWantShow == page ? 1 : page + 1);

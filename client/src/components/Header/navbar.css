@@ -51,17 +51,31 @@
 /* MEDIA QURIES */
 
 @media (max-width:786px) {
-    .navbar{
-        width: 100%;
+    .show_navbar{
+        
         height: 100vh;
+    }
+    .close_navbar{
+        height: 15vh;
+    }
+    .navbar {
+        width: 100%;
         flex-direction: column;
         justify-content: space-evenly;
-        padding-top: 60px;
     }
     .navbar_brand{
         position: absolute;
         left: 30px;
         top: 30px;
+    }
+    .show{
+        display: flex;
+        transition: 0.8s;
+
+    }
+    .not_show{
+        transition: 1s;
+        opacity: 0;
     }
     .middle_nav{
         flex-direction: column;
@@ -75,8 +89,5 @@
         top: 20px;
         right: 30px;
     }
-    .close_navbar{
-        height: 70px;
-        padding: 0px;
-    }    
+        
 }

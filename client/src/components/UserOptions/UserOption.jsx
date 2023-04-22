@@ -23,7 +23,10 @@ export default function UserOption({ user }) {
     { icon: <ViewListIcon />, name: 'Orders',onClick: () => navigate("/orders")},
     { icon: <PersonIcon />, name: 'Profile',onClick: () => navigate("/account") },  
     {icon:<ShoppingCartIcon style={{color:items.length>0?"tomato":"unset"}}/>,name:`(${items.length}) Cart`,onClick: () => navigate("/cart")},
-    {icon:<LogoutIcon/>,name:"Logout", onClick: () => dispatch(logoutUser())},
+    {icon:<LogoutIcon/>,name:"Logout", onClick: () => {
+      dispatch(logoutUser())
+      navigate("/login")
+    }},
   ];
 
   if (user.user.role === 'admin') {
