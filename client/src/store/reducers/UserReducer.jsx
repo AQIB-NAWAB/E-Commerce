@@ -39,22 +39,18 @@
     "register/user",
     async ({ email, name, password, avatar }, { rejectWithValue }) => {
       try {
-        const formData = new FormData();
-        formData.append("email", email);
-        formData.append("name", name);
-        formData.append("password", password);
-        formData.append("avatar", avatar);
+        
   
         const config = {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
           withCredentials: true,
         };
   
         const response = await axios.post(
           "http://localhost:3000/api/v1/register",
-          formData,
+          {name,email,password,avatar},
           config
         );
         console.log(response.data);
@@ -65,6 +61,9 @@
       }
     }
   );
+  
+
+
   
 
   // load user
@@ -149,7 +148,7 @@
         state.loading=false
         state.isAuthenticated= false
         state.user=null
-        state.error= action.payload
+        state.error= null
     })
   //logout the user
   builder.addCase(logoutUser.pending,(state)=>{

@@ -9,33 +9,36 @@ const cloudinary=require("cloudinary")
 const fs = require('fs');
 
 
-exports.registerUser = catchAsyncError(async (req, res, next) => {
-    let myCloud;
-    if (req.body.avatar) {
-        const buffer = Buffer.from(req.body.avatar.split(',')[1], 'base64'); // convert base64 image to buffer
-        myCloud = await cloudinary.uploader.upload(buffer, { // pass the buffer to cloudinary
-          folder: "avatars",
-          width: 300,
-          crop: "scale",
+    exports.registerUser = catchAsyncError(async (req, res, next) => {
+        try {
+            const isUserAlreadyExist=await User.findOne({email:req.body.email})
+            if(isUserAlreadyExist){
+                return next(new CustomError("User Already Exist"),400)
+            }
+        
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 300,
+            crop: "scale",
         });
-      }
-if(!myCloud){
-    return next(new CustomError("Getting error from Registration"),400)
-}
-    const { name, email, password } = req.body;
-    const user = await User.create({
-      name,
-      email,
-      password,
-      avatar:{
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url,
-          }
+    
+        const { name, email, password } = req.body;
+        const user = await User.create({
+            name,
+            email,
+            password,
+            avatar: {
+            public_id: result.public_id,
+            url: result.secure_url,
+            },
+        });
+    
+        sendToken(user, 201, res);
+        } catch (error) {
+        console.log(error);
+        }
     });
-    sendToken(user, 201, res);
-  });
   
-
 // Login User
 
 exports.loginUser=catchAsyncError(async(req,res,next)=>{

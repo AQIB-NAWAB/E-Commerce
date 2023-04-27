@@ -39,7 +39,7 @@
     gap: 30px;
 }
 
-.close_icon{
+.navbar .close_icon{
     display: none;
 }
 
@@ -52,25 +52,50 @@
 
 @media (max-width:786px) {
     .show_navbar{
-        
+        position: fixed;
+        top: 0px;
+        left: 0;
         height: 100vh;
+        transition: .5s;
+        z-index: 999;
+    }
+   .navbar a{
+        font-size: 20px;
+        font-family:  'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    }
+ 
+    .navbar svg{
+        width: 25px;
+        height: 25px;
     }
     .close_navbar{
-        height: 15vh;
+        height: 11vh;
+        transition: .5s;
+        z-index: 999;
+
+
     }
     .navbar {
         width: 100%;
         flex-direction: column;
         justify-content: space-evenly;
+        z-index: 9999;
+
     }
     .navbar_brand{
         position: absolute;
         left: 30px;
-        top: 30px;
+        top: 25px;
+        font-size: 22px;
+        font-family: monospace;
+        font-weight: bolder;
+   
     }
     .show{
         display: flex;
         transition: 0.8s;
+
 
     }
     .not_show{
@@ -83,7 +108,7 @@
 
     }
 
-    .close_icon{
+    .navbar .close_icon{
         position: absolute;
         display: block;
         top: 20px;

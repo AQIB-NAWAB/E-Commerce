@@ -40,7 +40,12 @@
 @media (max-width:780px) {
   .image_holder .img_product{
     width: 100%;
+    height: 40%;
     margin: 0px auto;
-    border: 10px solid gray;
+    border: 1px solid gray;
   } 
+  .image_holder{
+    width: 60%;
+    margin: 0px auto;
+  }
 }

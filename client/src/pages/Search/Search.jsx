@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {  useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {RxCross2} from "react-icons/rx"
+
 import "./search.css"
 const Search = () => {
     const navigate = useNavigate();
@@ -33,6 +35,9 @@ const Search = () => {
           Search
         </button>
       </form>
+      <span className='close_icon'>
+  <Link to="/products"> <RxCross2 color='white' size={45} /> </Link>
+</span>
     </div>
   );
 };

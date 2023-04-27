@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "./Cart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart,removeFromCart } from "../../store/reducers/CartReducer";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {BsCartXFill} from "react-icons/bs"
+import { fetchProductDetails } from "../../store/reducers/ProductReducer";
 const Cart = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.Cart.items);
+  const navigate=useNavigate()
   
   // calculate total quantity and total price
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
@@ -37,9 +39,14 @@ const Cart = () => {
       );
     }
   };
+const seeDetails=(id)=>{
+  dispatch(fetchProductDetails(id))
+  navigate(`/product/${id}`)
 
+}
   return (
   <>
+
     <div className="cart">
       <h2 className="cart__title ">Your Cart</h2>
       <hr />
@@ -64,6 +71,7 @@ const Cart = () => {
           
           <div className="cart__items">
             {items.map((item) => (
+              
               <div className="cart__item" key={item.productId}>
                 <img
                   className="cart__item-image"
@@ -91,7 +99,10 @@ const Cart = () => {
                 <div className="item_price">
                     ${item.quantity*item.price}
                 </div>
+                <div className="btns">
                 <button onClick={()=>dispatch(removeFromCart(item._id))} className="remove">Remove</button>
+                <button onClick={()=>seeDetails(item._id)} className="details">Details</button>
+                </div>
               </div>
             ))}
           </div>

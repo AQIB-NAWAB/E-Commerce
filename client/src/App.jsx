@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/Header/Navbar'
-import {Routes,Route} from "react-router-dom"
+import {Routes ,Route} from "react-router-dom"
 import Home from './pages/Home/Home'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Search from './pages/Search/Search'
@@ -12,9 +12,11 @@ import { loadUser,clearErrors } from './store/reducers/UserReducer'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from './pages/User/LogIn'
-import SignUp from './pages/User/Signup'
+import SignUp from './pages/User/SignUp.jsx'
 import Cart from './pages/Cart/Cart'
 import Account from './pages/Account/Account'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import UpdateProfile from './pages/User/UpdateProfile'
 function App() {
  const {isAuthenticated,user,error}=useSelector(state=>state.User)
  const dispatch=useDispatch()
@@ -31,7 +33,7 @@ useEffect(()=>{
 {isAuthenticated && <UserOption user={user}/>}
 
 
-<Routes>
+<Routes >
   <Route path='/' exact element={<Home/>}/>
   <Route path='/product/:id' element={<ProductDetails/>} 
   /> 
@@ -44,7 +46,11 @@ useEffect(()=>{
   <Route path="/login" element={<Login/>} />
   <Route path="/signup" element={<SignUp/>} />
   <Route path="/cart" element={<Cart/>}/>
-{isAuthenticated && <Route path='/account' element={<Account/>}/>}  
+{isAuthenticated && <Route exact path='/account' element={<Account/>} />}
+{isAuthenticated && <Route exact path='/update' element={<UpdateProfile/>} />}
+
+
+
 </Routes>
 
    </div>

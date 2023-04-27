@@ -38,6 +38,7 @@ const [page, setPage] = useState(1);
   const { loading } = useSelector((state) => state.Products);
 const products=useSelector(state=>state.Products.products)
   const handleChange = (event, newValue, activeThumb) => {
+     
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -47,11 +48,13 @@ const products=useSelector(state=>state.Products.products)
     } else {
       setprice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
     }
+   
   };
   let pageWantShow = Math.ceil(products.productCount / 8);
 
 if(keyword){
   pageWantShow=Math.ceil((products.length)/8)
+  console.log("keyword : "+ pageWantShow)
 }
   const handelPagination = () => {
     setPage(pageWantShow == page ? 1 : page + 1);
@@ -60,9 +63,10 @@ if(keyword){
 
   useEffect(() => {
     const data = { keyword: keyword || "", price, page,isCategory};
-    dispatch(fetchProducts(data));
+     dispatch(fetchProducts(data));
   }, [dispatch, keyword, price, page,isCategory]);
-
+ 
+  
   if (loading) {
     return <Loading />;
   }
@@ -78,17 +82,21 @@ if(keyword){
       </div>
       <div className="filter_box">
         <h3>Price :</h3>
-        <Box sx={window.innerWidth<786?"200":"300"}>
+        <br/>
+        <br/>
+        <Box sx={{width:window.innerWidth<786?"400":"300"}}>
           <Slider
-          sx={{ color: 'black' }}  
+          sx={{ color: 'black',width:window.innerWidth<786?"300px":"200px",zIndex:"0" }}  
             getAriaLabel={() => "Minimum distance"}
             value={price}
             onChange={handleChange}
-            valueLabelDisplay="auto"
+            valueLabelDisplay="on"
             min={0}
             max={1000}
             getAriaValueText={valuetext}
+
             disableSwap
+            
             
           />
         </Box>

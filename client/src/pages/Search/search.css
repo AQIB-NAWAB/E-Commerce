@@ -34,6 +34,12 @@ max-width: 600px;
   .search-input::placeholder{
     font-size: 19px;
   }
+  .close_icon{
+    position: absolute;
+    display: block;
+    top: 20px;
+    right: 30px;
+}
   
   .search-submit {
     background-color: #ff0000;

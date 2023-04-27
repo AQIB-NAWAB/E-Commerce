@@ -41,7 +41,7 @@
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 1rem;
-    background-color: red;
+
     cursor: pointer;
   }
   .image_section img:hover{
@@ -92,7 +92,13 @@
     .image_section {
       margin-bottom: 2rem;
     }
-    
+.info_section{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}    
     .info_section h3 {
       font-size: 1.5rem;
     }

@@ -18,7 +18,7 @@ const Account = () => {
     <h1>My Profile</h1>
     <div className='account_container'>
     <div className="image_section">
-        <ImageHolder imageUrl={user.avatar[0]}/>
+        <img src={user.avatar.url} alt="user" />
         <button > Edit Profile</button>
         </div>
         <div className="info_section">
