@@ -7,18 +7,19 @@ import {BsCartXFill} from "react-icons/bs"
 import { fetchProductDetails } from "../../store/reducers/ProductReducer";
 const Cart = () => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.Cart.items);
+  const items = useSelector((state) => state.Cart.items)
+  const {isAuthenticated} =useSelector(state=>state.User)
   const navigate=useNavigate()
   
   // calculate total quantity and total price
-  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
-  const totalPrice = items.reduce((total, item) => total + item.quantity * item.price, 0);
+  const totalQuantity = items?.reduce((total, item) => total + item.quantity, 0);
+  const totalPrice = items?.reduce((total, item) => total + item.quantity * item.price, 0);
 
   const increaseQnty = (id, quantity, stock) => {
     const newQty = quantity + 1;
     console.log(quantity);
     if (stock <= quantity) {
-      return;
+      return toast.error("Limit does not meet .");
     } else {
       dispatch(addToCart({ productId: id, quantity: 1 }));
     }
@@ -29,7 +30,7 @@ const Cart = () => {
     quantity = newQty - quantity;
 
     if (newQty < 1) {
-      return;
+      return toast.error("Limit does not meet .");
     } else {
       dispatch(
         addToCart({
@@ -44,13 +45,20 @@ const seeDetails=(id)=>{
   navigate(`/product/${id}`)
 
 }
+const handleCheckout = () => {
+  if (isAuthenticated) {
+    navigate("/shipping"); // Navigate to payment page if user is logged in
+  } else {
+    navigate("/login"); // Navigate to login page if user is not logged in
+  }
+};
   return (
   <>
 
     <div className="cart">
       <h2 className="cart__title ">Your Cart</h2>
       <hr />
-      {items.length === 0 ? (
+      {items?.length === 0 ? (
         <div className="empty_cart">
         <p className="cart__empty">Your cart is empty.</p>
         <BsCartXFill/>
@@ -70,7 +78,7 @@ const seeDetails=(id)=>{
         </div>
           
           <div className="cart__items">
-            {items.map((item) => (
+            {items?.map((item) => (
               
               <div className="cart__item" key={item.productId}>
                 <img
@@ -112,11 +120,11 @@ const seeDetails=(id)=>{
 
     </div>
     {
-      items.length>0?(
+      items?.length>0?(
 <div className="checkout">
   <h3>Payment To Be Here</h3>
   <h4>Your Total is <br/><br/>  ${totalPrice}</h4>
-  <button className="checkout">Checkout</button>
+  <button className="checkout" onClick={()=>handleCheckout()}>Checkout</button>
 </div>
       ):""
     }

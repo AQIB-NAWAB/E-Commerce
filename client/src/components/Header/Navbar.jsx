@@ -38,7 +38,7 @@ const Navbar = () => {
 
 <div className={`right_navbar ${isOpen?"show":"not_show"}`}>
 <Link onClick={()=>close_navbar()} to="/search"><BsSearch size={20}/></Link>
-<Badge badgeContent={items.length} color="primary">
+<Badge badgeContent={items?.length} color="primary">
       
 <Link onClick={()=>close_navbar()} to="/cart"><BsCart4 size={20}/></Link>
     </Badge>

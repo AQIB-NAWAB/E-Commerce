@@ -1,4 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 const initialState={
     isUpdated:false,
     loading:false,
@@ -8,7 +9,7 @@ const initialState={
 // update proile
 export const updateProfile = createAsyncThunk(
     "profile/update",
-    async ({ name, email, password, avatar }, { rejectWithValue }) => {
+    async ({name, email, avatar }, { rejectWithValue }) => {
       try {
         const config = {
           headers: {
@@ -18,8 +19,8 @@ export const updateProfile = createAsyncThunk(
         };
         
         const response = await axios.put(
-          "http://localhost:3000/api/v1/profile",
-          { name, email, password, avatar },
+          "http://localhost:3000/api/v1/me/update",
+          { name, email, avatar },
           config
         );
         
@@ -34,35 +35,63 @@ export const updateProfile = createAsyncThunk(
   
 
 
+// Update user Role {Admin}
 
+export const UpdateUserRole=createAsyncThunk("Update/Role",async({userId,name,email,role},{rejectWithValue})=>{
+  try{
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    };
+    
+    axios.put(`http://localhost:3000/api/v1/admin/user/${userId}`, {email,name,role},config);
+  }catch(error){
+    console.log(error)
+  }
 
+  })
+  
 
-const ProfileReducer=createSlice({
+  const ProfileReducer=createSlice({
     name:"Profile",
     initialState,
     reducers:{
-        clearErrors:(state,action)=>{
-            state.error=""
-          }
+      clearErrors:(state,action)=>{
+        state.error=""
+      }
     },
     extraReducers:(builder)=>{
-        builder
+      builder
         .addCase(updateProfile.pending, (state) => {
-            state.loading = true;
-            state.error = null;
-            state.isUpdated=false
-          })
-          .addCase(updateProfile.fulfilled, (state, action) => {
-            state.loading =false;
-            state.isUpdated = action.payload;
-          })
-          .addCase(updateProfile.rejected, (state, action) => {
-            state.status = false;
-            state.error = action.payload;
-          });
-    }
-    
-})
-
+          state.loading = true;
+          state.error = null;
+          state.isUpdated=false
+        })
+        .addCase(updateProfile.fulfilled, (state, action) => {
+          state.loading =false;
+          state.isUpdated = action.payload;
+        })
+        .addCase(updateProfile.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase(UpdateUserRole.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+          state.isUpdated=false
+        })
+        .addCase(UpdateUserRole.fulfilled, (state, action) => {
+          state.loading =false;
+          state.isUpdated = action.payload;
+        })
+        .addCase(UpdateUserRole.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
+    } 
+  })
+  
 export const {clearErrors}=ProfileReducer.actions
 export default ProfileReducer.reducer

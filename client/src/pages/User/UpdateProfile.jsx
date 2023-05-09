@@ -1,44 +1,65 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./UpdateProfile.css";
-import Loading from "../../components/Loading/Loading"
+import Loading from "../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import {CiFaceSmile} from "react-icons/ci"
+import { CiFaceSmile } from "react-icons/ci";
+import { AiOutlineMail } from "react-icons/ai";
 import { updateProfile } from "../../store/reducers/ProfileReducer";
 import { loadUser } from "../../store/reducers/UserReducer.jsx";
 import { clearErrors } from "../../store/reducers/ProfileReducer";
+import { toast, ToastContainer } from "react-toastify";
+import {useNavigate} from "react-router-dom"
 const UpdateProfile = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.User.user);
   const { error, isUpdated, loading } = useSelector((state) => state.Profile);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  console.log(user);
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
-
+const navigate=useNavigate()
   const updateProfileSubmit = (e) => {
     e.preventDefault();
+if(!name  && !email && !password){
+  toast.error("Enter Data")
+}
+    
+  const data={
+    name,
+    email,
+    avatar
+  }
+    dispatch(updateProfile(data));
+    
+    if (isUpdated) {
+      toast.error("Profile Updated Successfully");
+      dispatch(loadUser());
 
-    const myForm = new FormData();
+      navigate("/account");
 
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("avatar", avatar);
-    dispatch(updateProfile(myForm));
+    }
   };
 
   const updateProfileDataChange = (e) => {
+    const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
+        if (file.size > 1024 * 1024) { // check if file size is greater than 1MB
+          toast.error("Image size must be less than 1MB.");
+          return;
+        }
         setAvatar(reader.result);
       }
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
+
 
   useEffect(() => {
     if (user) {
@@ -48,27 +69,19 @@ const UpdateProfile = ({ history }) => {
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
-    if (isUpdated) {
-      alert.success("Profile Updated Successfully");
-      dispatch(loadUser());
-
-      history.push("/account");
-
-      dispatch({
-        type: UPDATE_PROFILE_RESET,
-      });
-    }
-  }, [dispatch, error, alert, history, user, isUpdated]);
+    
+  }, [dispatch, error, , user, isUpdated]);
   return (
     <Fragment>
       {loading ? (
         <Loading />
       ) : (
         <Fragment>
+          <ToastContainer />
           <div className="updateProfileContainer">
             <div className="updateProfileBox">
               <h2 className="updateProfileHeading">Update Profile</h2>
@@ -90,7 +103,7 @@ const UpdateProfile = ({ history }) => {
                   />
                 </div>
                 <div className="updateProfileEmail">
-                  <MailOutlineIcon />
+                  <AiOutlineMail />
                   <input
                     type="email"
                     placeholder="Email"

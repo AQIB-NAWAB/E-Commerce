@@ -27,10 +27,10 @@ export default function UserOption({ user }) {
     {
       icon: (
         <ShoppingCartIcon
-          style={{ color: items.length > 0 ? 'tomato' : 'unset' }}
+          style={{ color: items?.length > 0 ? 'tomato' : 'unset' }}
         />
       ),
-      name: `(${items.length}) Cart`,
+      name: `(${items?.length}) Cart`,
       onClick: () => navigate('/cart'),
     },
     {
@@ -44,7 +44,7 @@ export default function UserOption({ user }) {
   ];
 
   if (user.user.role === 'admin') {
-    actions.unshift({ icon: <DashboardIcon />, name: 'DashBoard' });
+    actions.unshift({ icon: <DashboardIcon />, name: 'DashBoard',onClick: () => navigate('/dashboard')  });
   }
 
   const handleOpen = () => {
@@ -57,7 +57,7 @@ export default function UserOption({ user }) {
 
   return (
     <>
-      <div className={`${window.innerWidth < 786  ? 'backdrop' : ''}`}></div>
+      
       <Box
         sx={{
           height: 320,

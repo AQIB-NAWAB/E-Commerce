@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import "./Account.css"
 import ImageHolder from '../../components/ImageHolder/ImageHolder'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 const Account = () => {
     const dispatch=useDispatch()
     const navigate=useNavigate()
@@ -19,7 +19,9 @@ const Account = () => {
     <div className='account_container'>
     <div className="image_section">
         <img src={user.avatar.url} alt="user" />
-        <button > Edit Profile</button>
+       <button>
+         <Link to="/update"> Edit Profile</Link>
+         </button>
         </div>
         <div className="info_section">
             <span>

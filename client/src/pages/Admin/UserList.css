@@ -1,0 +1,25 @@
+.userList{
+display: flex;
+height: 100vh;
+}
+
+td{
+    font-family: monospace;
+    opacity: 0.98;
+}
+.userListContainer{
+    margin-bottom: 100px;
+    width: 80%;
+    margin: 0px auto;
+}
+
+@media (max-width:786px) {
+    .userList{
+        flex-direction: column;
+    }
+    .userListContainer{
+        overflow-x: scroll;
+        margin-bottom: 100px;
+    }
+    
+}

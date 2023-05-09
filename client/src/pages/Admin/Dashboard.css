@@ -1,0 +1,134 @@
+    .dashboard {
+        width: 100vw;
+        max-width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        position: absolute;
+    }
+    
+    .dashboard_container {
+        border-left: 1px solid rgba(0, 0, 0, 0.13);
+        background-color: rgb(255, 255, 255);
+        padding: 3rem 0;
+
+
+    }
+    
+    .dashboard_container > h2 {
+        color: rgba(0, 0, 0, 0.733);
+        font: 300 2rem "Roboto";
+        text-align: center;
+        width: 50%;
+        margin: auto;
+    }
+    
+    .dashboard_summary {
+        width: 60vw;
+        margin: 60px auto;
+        align-self: center;
+
+        position: relative;
+    }
+    
+    .dashboard_summary > div {
+        display: flex;
+        background-color: white;
+        justify-content: center;
+        height: 140px;
+    }
+    .dashboard_summary > div > p {
+        background-color: rgba(70, 117, 218, 0.932);
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: 1px;
+        text-align: center;
+        font-size: 27px;
+        padding: 1.5rem;
+        width: 100%;
+        margin: 0 2rem;
+    }
+    .dashboard_summary_box2 > a {
+        color: rgb(0, 0, 0);
+        font: 300 2rem "Roboto";
+        text-align: center;
+        background-color: rgb(255, 233, 174);
+        text-decoration: none;
+        padding: 1.2rem;
+        width: 12vmax;
+        height: 12vmax;
+        margin: 2rem;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+    .dashboard_summary_box2 > a:first-child {
+        background-color: rgb(255, 110, 110);
+        color: rgb(255, 255, 255);
+    }
+    
+    .dashboard_summary_box2 > a:last-child {
+        background-color: rgb(51, 51, 51);
+        color: rgb(255, 255, 255);
+    }
+    
+    .lineChart {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 100px;
+        margin-bottom: 50px;
+        justify-content: center;
+        align-items:center;
+        display: flex;
+        height: 300px;
+    }
+    
+    .doughnutChart {
+        width: 40vmax;
+        height: 400px;
+        justify-content: center;
+        align-items:center;
+        display: flex;
+        margin: auto;
+    }
+    
+    @media screen and (max-width: 600px) {
+        .dashboard {
+     display: flex;
+     flex-direction: column;
+        }
+    
+        .dashboard_container {
+        border-left: none;
+        }
+        .dashboard_summary{
+            width: 250px;
+            left: 0;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .dashboard_summary > div > p {
+        margin: 0;
+        font-size: 20px;
+        }
+    
+        .dashboard_summary_box2 > a {
+        padding: 0.5rem;
+        margin: 1rem;
+        font: 300 0.9rem "Roboto";
+        padding: 1.2rem;
+        width: 12vmax;
+        height: 12vmax;
+        }
+        .lineChart{
+            margin-top: 200px;
+            width: 400px;
+            height: 300px;
+        }
+    }
+    

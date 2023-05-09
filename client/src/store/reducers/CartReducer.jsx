@@ -5,7 +5,13 @@ const initialState = {
   items: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [],
   loading: false,
   error: "",
+  shippingInfo:localStorage.getItem("shippingInfo")?JSON.parse(localStorage.getItem("shippingInfo")):[],
 };
+
+export const saveShippingInfo = createAsyncThunk("save/info",async({address, city, state, country, pinCode, phoneNo })=>{
+  localStorage.setItem("shippingInfo", JSON.stringify({address, city, state, country, pinCode, phoneNo }));
+  
+})
 
 export const addToCart = createAsyncThunk("Add/Cart", async ({ productId, quantity }, { getState }) => {
   try {
@@ -33,6 +39,10 @@ export const addToCart = createAsyncThunk("Add/Cart", async ({ productId, quanti
     console.log(error);
   }
 });
+// save shipping info
+
+
+
 
 const cartSlice = createSlice({
   name: "Cart",

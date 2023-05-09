@@ -1,0 +1,18 @@
+.reviewDetails{
+    display: flex;
+    width: 100%;
+    margin: 100px 0px;
+}
+
+.reviewsContainer{
+    width: 60%;
+    margin: 0px auto;
+}
+.reviewsContainer button{
+    background-color: unset;
+    outline: none;
+    border: none;
+}
+.reviewsContainer{
+    text-align: center;
+}

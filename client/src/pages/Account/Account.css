@@ -56,6 +56,10 @@
     font-size: 20px;
     letter-spacing: 1px;
     margin-top: 15px;
+  }.image_section a{
+    color: white;
+    text-decoration: none;
+
   }
   
   .info_section {

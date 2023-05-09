@@ -6,6 +6,7 @@
     isAuthenticated: false,
     user: null,
     error: "",
+    users:[]
   };
 
 
@@ -104,6 +105,7 @@
   }
 
   })
+
   const userReducer = createSlice({
     name: "user",
     initialState,
@@ -191,6 +193,7 @@
       state.error= action.payload
   })
 
+  
   },  
   });
 

@@ -31,13 +31,13 @@ let productId;
     return <Loading />;
   }
  const increaseQnty=()=>{
-  if(product.stock<=quantity)return
+  if(product.stock<=quantity)return toast.error("Limit does not meet .")
   const qunty=quantity+1
   setQuantity(qunty)
  }
 
  const decreaseQnty=()=>{
-  if(1>=quantity)return
+  if(1>=quantity)return toast.error("Limit does not meet .")
   const qunty=quantity-1
   setQuantity(qunty)
  }
@@ -62,7 +62,7 @@ let productId;
         <h2 className="main_heading">Products Details</h2>
         <div className="product_details">
           <div className="product_image">
-            <ImageHolder imageUrl={product.images[0].url} />
+            <ImageHolder imageUrl={product?.images[0]?.url} />
           </div>
           <div className="product_info">
             <h2>{product.name}</h2>

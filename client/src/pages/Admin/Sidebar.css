@@ -1,0 +1,117 @@
+.sidebar {
+    top: 12%;
+    left: 0;
+    height: 40%;
+    width: 200px;
+    background-color: #fff;
+
+    position: sticky;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .sidebar  li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    gap: 10px;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  
+  .sidebar  li:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .sidebar  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    margin-right: 10px;
+  }
+  
+  .sidebar  p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+  } 
+  li .MuiListItemButton-root {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  li .MuiListItemButton-root:hover {
+    background-color: #f5f5f5;
+  }
+  
+  li .MuiListItemIcon-root {
+    min-width: 36px;
+  }
+  
+  li .MuiListItemText-root {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  li .MuiCollapse-container {
+    margin-left: 46px;
+  }
+  
+  li .MuiListItemButton-root.Mui-selected,
+  li .MuiListItemButton-root.Mui-selected:hover {
+    background-color: #e0e0e0;
+  }
+  .dropdown{
+    height: 100px;
+    transition: 0.7s;
+
+
+  }
+  .dropdown h3{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dropdown li{
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 20px;
+  }
+  .hide_dropdown{
+    height: 26px;
+    transition: 0.7s;
+  }
+  .hide_dropdown li{
+    display: none;
+    transition: 0.9s;
+  }
+  @media (max-width:786px) {
+    .sidebar p{
+      font-size: 15px;
+    }
+    .dropdown h3{
+      font-size: 17px;
+      font-weight: 100;
+    }
+    .sidebar{
+      position: relative;
+    }
+  }

@@ -15,6 +15,7 @@ import Avatar from '@mui/material/Avatar';
     import { registerUser } from "../../store/reducers/UserReducer"; 
     import { useNavigate } from "react-router-dom";
     const SignUp = () => {
+      const navigate=useNavigate()
   const [isShowPassword, setIsShowPassword] = useState(false);
 
       const [avatar, setAvatar] = useState(null);
@@ -24,8 +25,13 @@ import Avatar from '@mui/material/Avatar';
         password: "",
 
       });
-      const {error,loading}=useSelector(state=>state.User)
+      const {isAuthenticated,error,loading}=useSelector(state=>state.User)
       const dispatch=useDispatch()
+      useEffect(() => {
+        if (isAuthenticated) {
+          navigate("/account");
+        }
+      }, [isAuthenticated, navigate]);
   useEffect(()=>{
     
   if(error){
@@ -71,6 +77,9 @@ import Avatar from '@mui/material/Avatar';
         <>
           <ToastContainer />
         <div className="form_container animate">
+        <div className="form_header">
+          <h1> Ecommerce Hub</h1>
+        </div>
           <div className="form_body">
             <form>
               <div className="form_input_container">
@@ -111,7 +120,7 @@ import Avatar from '@mui/material/Avatar';
               </div>
 
               <div className="avatar">
-               <img src={avatar} alt="user picture" />
+               <img src= {avatar ||"./images/user.png"} alt="user picture hai" />
                 <label htmlFor="avatar" className="avatar_label">
                   Choose
                 </label>
