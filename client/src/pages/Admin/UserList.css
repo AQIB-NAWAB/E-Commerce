@@ -1,6 +1,5 @@
 .userList{
 display: flex;
-height: 100vh;
 }
 
 td{
@@ -19,7 +18,10 @@ td{
     }
     .userListContainer{
         overflow-x: scroll;
-        margin-bottom: 100px;
+        margin: 10px auto;
+        height: auto;
+        width: 90%;
+        
     }
     
 }

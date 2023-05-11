@@ -82,7 +82,7 @@ useEffect(()=>{
 {isAuthenticated && user?.user?.role=="admin" && <Route exact path="/admin/user/update/:userId" element={<UpdateUser/>} />}
 
 {isAuthenticated && user?.user?.role=="admin" && <Route exact path="/admin/reviews" element={<ProductReviews/>} />}
-{isAuthenticated && user?.user?.role=="admin" && <Route exact path="admin/reviews/:revId" element={<Review/>} />}
+{isAuthenticated && user?.user?.role=="admin" && <Route exact path="admin/reviews/:reviwedProductId" element={<Review/>} />}
 
 
 

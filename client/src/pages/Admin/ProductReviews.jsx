@@ -17,8 +17,8 @@ dispatch(fetchProducts(""))
       <div className="productReviews">
         <Sidebar/>
         <div className="productReviwesContainer">
-{
-reviwed_products && reviwed_products.map(pro=>(
+{reviwed_products &&
+reviwed_products.length ==0 ? <h1 className='main_heading'>No Products....</h1>:reviwed_products&& reviwed_products.map(pro=>(
   <div className="product">
     <Link to={`/admin/reviews/${pro._id}`}>
     <img src={pro.images[0].url} alt={pro.name} />
@@ -27,6 +27,7 @@ reviwed_products && reviwed_products.map(pro=>(
   </div>
 ))
 }
+
         </div>
       </div>
     </div>

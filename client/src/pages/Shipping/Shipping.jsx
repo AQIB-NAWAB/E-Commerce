@@ -5,7 +5,11 @@ import { Country, State } from "country-state-city";
 import { saveShippingInfo } from "../../store/reducers/CartReducer";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import {BiMap} from "react-icons/bi"
+import {BsFillTelephoneFill,BsFillHouseDoorFill} from "react-icons/bs"
+import {FiCodesandbox } from "react-icons/fi"
+import {MdAccountBalance} from "react-icons/md"
+import {FaLocationArrow } from "react-icons/fa"
 const Shipping = ({ history }) => {
 const navigate=useNavigate()
     const dispatch = useDispatch();
@@ -48,6 +52,7 @@ console.log(shippingInfo)
 <ToastContainer/>
       <div className="shippingContainer">
         <div className="shippingBox">
+        
           <h2 className="shippingHeading">Shipping Details</h2>
 
           <form
@@ -56,6 +61,7 @@ console.log(shippingInfo)
             onSubmit={shippingSubmit}
           >
             <div>
+            <BiMap/>
               <input
                 type="text"
                 placeholder="Address"
@@ -66,6 +72,7 @@ console.log(shippingInfo)
             </div>
 
             <div>
+              <BsFillHouseDoorFill/>
               <input
                 type="text"
                 placeholder="City"
@@ -76,6 +83,7 @@ console.log(shippingInfo)
             </div>
 
             <div>
+              <FiCodesandbox/>
               <input
                 type="number"
                 placeholder="Pin Code"
@@ -86,6 +94,7 @@ console.log(shippingInfo)
             </div>
 
             <div>
+              <BsFillTelephoneFill/>
               <input
                 type="number"
                 placeholder="Phone Number"
@@ -97,7 +106,7 @@ console.log(shippingInfo)
             </div>
 
             <div>
-
+            <MdAccountBalance/>
               <select
                 required
                 value={country}
@@ -115,7 +124,7 @@ console.log(shippingInfo)
 
             {country && (
               <div>
-
+<FaLocationArrow/>
                 <select
                   required
                   value={state}

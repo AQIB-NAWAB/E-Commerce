@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import ImageHolder from "../../components/ImageHolder/ImageHolder";
@@ -11,15 +11,22 @@ import {FcPrevious} from "react-icons/fc"
 import {addToCart} from "../../store/reducers/CartReducer"
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactStars from 'react-stars'
+import { sendReview } from "../../store/reducers/productReviewsReducer";
+
 const ProductDetails = () => {
+  const navigate=useNavigate()
+  const user=useSelector(state=>state.User?.user?.user)
   const [selected,setSelected]=useState(0)
 const [quantity,setQuantity]=useState(0)
+const [showModal, setShowModal] = useState(false);
+const [rating, setRating] = useState(0);
+const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const { id } = useParams();
-
   useEffect(() => {
     dispatch(fetchProductDetails(id));
-  }, [id, dispatch]);
+  }, [id, dispatch,navigate]);
 
   const state = useSelector((state) => state.Products);
 let productId;
@@ -55,6 +62,25 @@ let productId;
   }
     
  }
+ const handleRatingChange = (value) => {
+  setRating(value);
+};
+
+const handleCommentChange = (event) => {
+  setComment(event.target.value);
+};
+ const handleSubmit = (event) => {
+  event.preventDefault();
+  if(!user){
+    navigate("/login")
+  }
+  // add code to save userRating and userComment to state or server
+  setShowModal(false);
+  setRating(0);
+  setComment("");
+  dispatch(sendReview({productId:product?._id,user:user?._id,rating,comment,name:user?.name}))
+};
+
   if (product) {
     return (
       <div>
@@ -86,12 +112,56 @@ let productId;
                 {product.stock <= 0 ? "Out of Stock" : "In Stock"}
               </span>
             </h3>
+            <h3>
+              Ratings :
+              
+              <span>
+                
+                {" " + product.ratings}
+                </span>
+            </h3>
             <hr />
             <h3>Description</h3>
             <p>{product.description}</p>
-            <span className="review_btn">Send Review</span>
+            <span className="review_btn" onClick={()=>setShowModal(true)}>Send Review</span>
           </div>
+          
         </div>
+        {
+            showModal && (
+              <div className="commentBox">
+              <h3 className="main_heading"> Leave a Comment</h3>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="rating">Rating</label>
+                  <ReactStars
+                    count={5}
+                    value={rating}
+                    onChange={handleRatingChange}
+                    size={30}
+                    color1="black"
+                    color2="white"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="comment">Comment</label>
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    rows="3"
+                    value={comment}
+                    onChange={handleCommentChange}
+                  />
+                </div>
+                
+                <button type="submit">Submit</button>
+              </form>
+              <div className="close" onClick={()=>setShowModal(false)}>
+                X
+              </div>
+            </div>
+            )
+          }
         <div className="reviews_container">
           {product.reviews.length <= 0 ? (
             <h1 className="main_heading">No Reviews... </h1>

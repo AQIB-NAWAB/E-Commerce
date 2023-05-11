@@ -12,6 +12,75 @@
   margin: 100px auto;
   
 }
+.commentBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: tomato;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  margin: 0px auto;
+  position: fixed;
+  z-index: 11;
+}
+
+.commentBox textarea {
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+  outline: none;
+
+}
+.commentBox .close{
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  font-size: 30px;
+  cursor: pointer;
+
+}
+.commentBox button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+.commentBox form{
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+
+}
+.commentBox form .form-group{
+  display: flex;
+  width: 300px;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+}
+.commentBox button:hover {
+background-color: white;
+color: tomato;
+transition: 0.4s;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.rating-container .react-ratings {
+  margin-right: 10px;
+}
+
 
 @media (max-width:780px) {
   .product_details{
