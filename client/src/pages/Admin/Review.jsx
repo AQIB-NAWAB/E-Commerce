@@ -26,6 +26,8 @@ console.log(reviwedProductId)
       <div className='reviewDetails'>
         <Sidebar />
         <div className="reviewsContainer">
+        <h2 className='main_heading'>All Reviews</h2>
+
           <thead>
             <tr>
               <th>Review ID</th>

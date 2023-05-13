@@ -10,6 +10,7 @@ import  createNewProductReducer  from "./reducers/NewProductReducer"
 import  UpdateProductReducer from "./reducers/ProductUpdateReducer"
 import UserDetailsReducer from "./reducers/UserDetailsReducer"
 import productReviewsSlice from "./reducers/productReviewsReducer"
+import  getMyOrdersSlice  from "./reducers/OrderReducer"
 const reducer=combineReducers({
     Products:ProductReducer,
     User:UserReducer,
@@ -21,7 +22,8 @@ const reducer=combineReducers({
     NewProduct:createNewProductReducer,
     ProductUpdate:UpdateProductReducer,
     UserDetails:UserDetailsReducer,
-    ProductReviews:productReviewsSlice
+    ProductReviews:productReviewsSlice,
+    Orders:getMyOrdersSlice
 
 
 })

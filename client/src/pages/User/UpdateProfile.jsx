@@ -17,7 +17,7 @@ const UpdateProfile = ({ history }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  const [avatarPreview, setAvatarPreview] = useState("");
 const navigate=useNavigate()
   const updateProfileSubmit = (e) => {
     e.preventDefault();
@@ -115,7 +115,7 @@ if(!name  && !email && !password){
                 </div>
 
                 <div id="updateProfileImage">
-                  <img src={avatarPreview} alt="Avatar Preview" />
+                  <img src={avatarPreview || "/images/user.png"} alt="Avatar Preview" />
                   <input
                     type="file"
                     name="avatar"

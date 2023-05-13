@@ -57,7 +57,6 @@ const Dashboard = () => {
       }
       if (userUpdated) {
         toast.success("user Updated Successfully");
-        dispatch(clearUpdate());
       }
 
 

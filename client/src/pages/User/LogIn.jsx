@@ -34,7 +34,7 @@ const Login = () => {
       toast.error(error);
     }
     dispatch(clearErrors())
-  }, [error]);
+  }, [error,dispatch ]);
 
   const handelLoginData = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });

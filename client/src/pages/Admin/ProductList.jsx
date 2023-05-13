@@ -30,6 +30,8 @@ const ProductList = () => {
       <div className="productList">
         <Sidebar />
         <div className="productListContainer">
+        <h2 className='main_heading'>All Products</h2>
+
           <table>
             <thead>
               <tr>

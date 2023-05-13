@@ -34,6 +34,8 @@ const UserList = () => {
                 <ToastContainer/>
                 <Sidebar/>
                 <div className="userListContainer">
+                <h2 className='main_heading'>All Users</h2>
+
                     <table>
                         <thead>
                             <tr>

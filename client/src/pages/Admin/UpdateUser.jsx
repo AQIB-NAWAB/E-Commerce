@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getUserDetails } from "../../store/reducers/UserDetailsReducer";
 import { UpdateUserRole } from "../../store/reducers/ProfileReducer";
+import { clearErrors } from "../../store/reducers/UserReducer";
 
 const UpdateUser = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -53,8 +54,7 @@ dispatch(getUserDetails({userId}))
     }
 
     if (isUpdated) {
-      alert.success("User Updated Successfully");
-      navigate("/admin/users");
+        navigate("/dashboard");
     }
   }, [dispatch, alert, error, history, isUpdated, updateError, user, userId]);
 console.log(user)

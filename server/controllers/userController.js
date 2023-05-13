@@ -186,14 +186,13 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
       email: req.body.email,
     };
   
-
-      const logged_user = await User.findById(req.user._id);
+    const logged_user = await User.findById(req.user._id);
+if(req.body.avatar!==""){
+    const imageId = logged_user.avatar.public_id;
   
-      const imageId = logged_user.avatar.public_id;
-  
-      await cloudinary.v2.uploader.destroy(imageId);
-  
-      const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    await cloudinary.v2.uploader.destroy(imageId)
+    
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
         folder: "avatars",
         width: 150,
         crop: "scale",
@@ -204,6 +203,12 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
         url: myCloud.secure_url,
       };
     
+}
+  if(req.body.avatar==""){
+    newUserData.avatar=logged_user.avatar
+  }
+      
+  
   
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
       new: true,
@@ -277,8 +282,12 @@ if(!user){
     return next(new CustomError(`User Does Not Exist with this id: ${req.params.id}`))
 }
     
+const imageId = user.avatar.public_id;
 
+await cloudinary.v2.uploader.destroy(imageId);
     await User.findByIdAndDelete(req.params.id)
+    
+ 
 
     res.status(200).json({
         success:true,

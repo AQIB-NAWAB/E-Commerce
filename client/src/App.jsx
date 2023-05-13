@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/Header/Navbar'
 import {Routes ,Route} from "react-router-dom"
@@ -22,25 +22,30 @@ import ProductList from './pages/Admin/ProductList'
 import UpdateProduct from './pages/Admin/UpdateProduct'
 import Shipping from './pages/Shipping/Shipping.jsx'
 import ConfirmOrder from './pages/ConfirmOrder/ConfirmOrder.jsx'
-import Payment from './pages/Payment/Payment.jsx'
+import Orders from './pages/Orders/Orders.jsx'
+import OrderDetails from './pages/Orders/OrderDetails.jsx'
 
+
+import Payment from './pages/Payment/Payment.jsx'
+import { Elements } from "@stripe/react-stripe-js";
 import axios from 'axios'
 import UserList from './pages/Admin/UserList'
 import UpdateUser from './pages/Admin/UpdateUser'
 import ProductReviews from './pages/Admin/ProductReviews'
 import Review from './pages/Admin/Review'
+import { loadStripe } from '@stripe/stripe-js'
 
 function App() {
-  const [stripeApiKey, setStripeApiKey] = useState("");
-
-  async function getStripeApiKey() {
-    const { data } = await axios.get("/api/v1/stripeapikey");
-
-    setStripeApiKey(data.stripeApiKey);
-  }
+ 
 
  const {isAuthenticated,user,error}=useSelector(state=>state.User)
- console.log(user)
+ const [stripeApiKey, setStripeApiKey] = useState("");
+
+ async function getStripeApiKey() {
+   const response = await axios.get("http://localhost:3000/api/v1/stripeapikey",{withCredentials:true});
+
+   setStripeApiKey(response?.data?.stripeApiKey);
+ } 
  const dispatch=useDispatch()
  if(error){
   toast.error(error)
@@ -48,6 +53,7 @@ function App() {
  }
 useEffect(()=>{
   dispatch(loadUser())
+  getStripeApiKey()
 },[dispatch])
   return (
    <div className='App'>
@@ -56,6 +62,9 @@ useEffect(()=>{
 
 
 <Routes >
+  
+
+
   <Route path='/' exact element={<Home/>}/>
   <Route path='/product/:id' element={<ProductDetails/>} 
   /> 
@@ -70,7 +79,10 @@ useEffect(()=>{
   <Route path="/cart" element={<Cart/>}/>
 {isAuthenticated && <Route exact path="/shipping" element={<Shipping/>} />}
 {isAuthenticated && <Route exact path="/order/confirm" element={<ConfirmOrder/>} />}
-{isAuthenticated && <Route exact path="/process/payment" element={Payment}/>}
+{isAuthenticated && <Route exact path="/orders/" element={<Orders/>} />}
+{isAuthenticated && <Route exact path="/order/:orderId" element={<OrderDetails/>} />}
+{isAuthenticated && <Route exact path='/process/payment' element={<Payment/>} />}
+
 {isAuthenticated && <Route exact path='/account' element={<Account/>} />}
 
 {isAuthenticated && <Route exact path='/update' element={<UpdateProfile/>} />}
