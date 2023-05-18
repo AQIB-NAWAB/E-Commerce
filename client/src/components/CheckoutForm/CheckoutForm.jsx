@@ -1,71 +1,75 @@
-import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import React, { useState } from 'react';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-
-const CheckoutForm = () => {
-  const [clientSecret, setClientSecret] = useState("");
-  const paymentData = {
-    amount: 2000
-  };
-
-  const getClientSecret = async () => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/v1/payment/process",
-        paymentData,
-        { withCredentials: true }
-      );
-
-      setClientSecret(data.client_secret);
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
+import '@stripe/stripe-js';
+import '@stripe/react-stripe-js';
+const CheckoutForm = ({ amount, currency, description }) => {
   const stripe = useStripe();
   const elements = useElements();
-
-  useEffect(() => {
-    getClientSecret();
-  }, []);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (event) => {
-    // Prevent default form submission behavior
     event.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+      metadata: {
+        order_id: '12345'
+      }
+    });
+    if (error) {
+      setErrorMessage(error.message);
       return;
     }
-
-    const result = await stripe.confirmPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(PaymentElement),
-      },
+    const { client_secret } = await axios.post('http://localhost:3000/api/v1/payment/process', {
+    amount:200
+    },{withCredentials:true}).then(res => res.data);
+    console.log(client_secret)
+    const { error: confirmError } = await stripe.confirmCardPayment(client_secret, {
+      payment_method: paymentMethod.id,
+      
     });
-
-    if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message);
+    if (confirmError) {
+      setErrorMessage(confirmError.message);
     } else {
-      // Payment succeeded!
-      console.log(result.paymentIntent);
+      setErrorMessage('');
+      console.log('Payment successful.');
     }
-  }
-
+  };
+  const CARD_ELEMENT_OPTIONS = {
+    iconStyle: "solid",
+    hidePostalCode: true,
+    style: {
+      base: {
+        iconColor: "rgb(240, 57, 122)",
+        color: "rgb(240, 57, 122)",
+        fontSize: "16px",
+        fontFamily: '"Open Sans", sans-serif',
+        fontSmoothing: "antialiased",
+        "::placeholder": {
+          color: "#CFD7DF"
+        }
+      },
+      invalid: {
+        color: "#e5424d",
+        ":focus": {
+          color: "#303238"
+        }
+      }
+    }
+  };
   return (
-    <div>
-      {clientSecret ? (
-        <form onSubmit={handleSubmit}>
-          <PaymentElement />
-          <button disabled={!stripe}>Submit</button>
-        </form>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  )
-}
+    <form onSubmit={handleSubmit} style={{width:"100%",height:"200vh"}}>
+      <div style={{width:"100%",height:"100%"}}>
+        <label>Card Details</label>
+        <CardElement  options={CARD_ELEMENT_OPTIONS}/>
+      </div>
+      <div>
+        <button type="submit">Pay 20</button>
+        {errorMessage && <p>{errorMessage}</p>}
+      </div>
+    </form>
+  );
+};
 
 export default CheckoutForm;

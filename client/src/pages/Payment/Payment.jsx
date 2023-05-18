@@ -17,14 +17,13 @@ const Payment = () => {
   }
   
   
-  
-  
   useEffect(() => {
     getStripeApiKey()
   }, [])
-  
+  console.log(stripeApiKey)
+  const stripePromise = loadStripe(stripeApiKey);
   return (
-    <Elements stripe={loadStripe(stripeApiKey)} >
+    <Elements stripe={stripePromise} >
       <CheckoutForm  />
     </Elements>
   )

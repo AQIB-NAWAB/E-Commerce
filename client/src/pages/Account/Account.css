@@ -80,7 +80,14 @@
     font-size: 1.5rem;
     margin: 0;
   }
-  
+  .passwordChange{
+    background-color: rgb(41, 41, 41);
+    color: white;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 18px;
+border-radius: 7px;
+  }
   /* media queries for responsive design */
   @media only screen and (max-width: 600px) {
     .account h1 {
@@ -89,7 +96,7 @@
     
     .account_container {
       flex-direction: column;
-      height: 90%;
+      height: 110%;
       padding: 1rem;
     }
     

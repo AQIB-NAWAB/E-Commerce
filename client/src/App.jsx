@@ -34,18 +34,13 @@ import UpdateUser from './pages/Admin/UpdateUser'
 import ProductReviews from './pages/Admin/ProductReviews'
 import Review from './pages/Admin/Review'
 import { loadStripe } from '@stripe/stripe-js'
+import ChangePassword from './pages/User/ChangePassword'
 
 function App() {
  
 
  const {isAuthenticated,user,error}=useSelector(state=>state.User)
- const [stripeApiKey, setStripeApiKey] = useState("");
-
- async function getStripeApiKey() {
-   const response = await axios.get("http://localhost:3000/api/v1/stripeapikey",{withCredentials:true});
-
-   setStripeApiKey(response?.data?.stripeApiKey);
- } 
+  
  const dispatch=useDispatch()
  if(error){
   toast.error(error)
@@ -53,7 +48,6 @@ function App() {
  }
 useEffect(()=>{
   dispatch(loadUser())
-  getStripeApiKey()
 },[dispatch])
   return (
    <div className='App'>
@@ -84,6 +78,8 @@ useEffect(()=>{
 {isAuthenticated && <Route exact path='/process/payment' element={<Payment/>} />}
 
 {isAuthenticated && <Route exact path='/account' element={<Account/>} />}
+{isAuthenticated && <Route exact path='/password/change' element={<ChangePassword/>} />}
+
 
 {isAuthenticated && <Route exact path='/update' element={<UpdateProfile/>} />}
 {isAuthenticated && user?.user?.role=="admin"  && <Route exact path="/dashboard"  element={<Dashboard/>}/>}

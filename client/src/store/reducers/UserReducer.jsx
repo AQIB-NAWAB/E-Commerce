@@ -62,7 +62,27 @@
       }
     }
   );
+  // update password
   
+  export const updatePassword = createAsyncThunk(
+    'password/update',
+    async ({oldPassword,newPassword,confirmPassword}, { rejectWithValue }) => {
+      console.log(oldPassword,newPassword)
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        };
+        const response = await axios.put('http://localhost:3000/api/v1/password/update',{oldPassword,newPassword,confirmPassword},config);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        return rejectWithValue(error.response?.data?.message || 'Failed to fetch user data');
+      }
+    }
+  );
 
 
   
@@ -193,7 +213,21 @@
       state.error= action.payload
   })
 
-  
+  // udpate password
+  builder.addCase(updatePassword.pending, (state) => {
+    state.loading= true
+    state.error= ""
+  });
+  builder.addCase(updatePassword.fulfilled,(state,action)=>{
+      state.loading=false
+      state.isAuthenticated= true
+      state.user= action.payload
+      state.error= ""
+  })
+  builder.addCase(updatePassword.rejected,(state,action)=>{
+      state.loading=false
+      state.error= action.payload
+  })
   },  
   });
 

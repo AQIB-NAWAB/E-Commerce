@@ -39,6 +39,11 @@ const Account = () => {
                 <h4>Joined</h4>
                 <h5>{user.createdAt}</h5>
             </span>
+            <br />
+            <span className='passwordChange'>
+
+            <Link to="/password/change">Change Password</Link>
+            </span>
         </div>    
     </div>
     </div>

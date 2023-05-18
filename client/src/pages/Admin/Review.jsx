@@ -27,6 +27,7 @@ console.log(reviwedProductId)
         <Sidebar />
         <div className="reviewsContainer">
         <h2 className='main_heading'>All Reviews</h2>
+<table>
 
           <thead>
             <tr>
@@ -52,6 +53,7 @@ console.log(reviwedProductId)
               </tr>
             ))}
           </tbody>
+            </table>
         </div>
       </div>
     </div>
